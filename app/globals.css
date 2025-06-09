@@ -1,26 +1,567 @@
-@import "tailwindcss";
+/* ───────────────────────────────────────────────────────────────────────── */
+/*                           app/globals.css                                */
+/*                     Tailwind CSS v3 – Error-Free Setup                    */
+/* ───────────────────────────────────────────────────────────────────────── */
 
+/* 1) TAILWIND CORE DIRECTIVES — *MUST* be first */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* 2) CUSTOM CSS VARIABLES */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Theme tokens */
+  --color-success-100: #49de50;
+  --color-success-200: #42c748;
+  --color-destructive-100: #f75353;
+  --color-destructive-200: #c44141;
+
+  --color-primary-100: #dddfff;
+  --color-primary-200: #cac5fe;
+
+  --color-light-100: #d6e0ff;
+  --color-light-400: #6870a6;
+  --color-light-600: #4f557d;
+  --color-light-800: #24273a;
+
+  --color-dark-100: #020408;
+  --color-dark-200: #27282f;
+  --color-dark-300: #242633;
+
+  /* font & pattern */
+  --font-mona-sans: "Mona Sans", sans-serif;
+  --bg-pattern: url("/pattern.png");
+
+  /* existing root vars */
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  /* Dark-mode overrides */
+  --color-success-100: #49de50;
+  --color-success-200: #42c748;
+  --color-destructive-100: #f75353;
+  --color-destructive-200: #c44141;
+
+  --color-primary-100: #dddfff;
+  --color-primary-200: #cac5fe;
+
+  --color-light-100: #ffffff;
+  --color-light-400: #6870a6;
+  --color-light-600: #4f557d;
+  --color-light-800: #24273a;
+
+  --color-dark-100: #ffffff;
+  --color-dark-200: #4f557d;
+  --color-dark-300: #242633;
+
+  --font-mona-sans: "Mona Sans", sans-serif;
+  --bg-pattern: url("/pattern.png");
+
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --ring: oklch(0.556 0 0);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+/* 3) BASE LAYER: resets & global element styles */
+@layer base {
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)];
+  }
+
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  p {
+    @apply text-[var(--color-light-100)];
+  }
+
+  ul {
+    @apply list-disc list-inside;
+  }
+
+  li {
+    @apply text-[var(--color-light-100)];
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+/* 4) COMPONENT LAYER: your UI classes */
+@layer components {
+
+  /* Card border */
+  .card-border {
+    @apply border-gradient p-0.5 rounded-2xl w-full h-[400px];
+    @apply sm:basis-1/2;
+    @apply md:block md:flex-1;
+  }
+
+  /* Card background */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-2xl shadow-xl;
+  }
+
+  .auth-layout {
+    @apply flex items-center justify-center w-screen min-h-screen bg-gray-900 px-4 sm:px-0;
+  }
+
+  /* ——— UPDATED AUTH MODAL (LARGER + DARKER + 3D) ——— */
+  .auth-modal-card-3d-lg {
+    width: 100% !important;
+    max-width: 420px;
+    padding: 2.5rem 2rem 1.8rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, #141424 0%, #1f1e33 100%) !important;
+    box-shadow:
+      0 20px 80px rgba(20, 16, 70, 0.45),
+      0 2px 24px rgba(120, 120, 220, 0.15) !important;
+    border: 2px solid rgba(105, 98, 201, 0.16) !important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 520px;
+    z-index: 100 !important;
+    position: relative;
+  }
+
+  /* ——— INPUTS & LABELS (ROOMIER) ——— */
+  .input-modern-lg {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border-radius: 0.85rem;
+    background: rgba(19, 19, 29, 0.96);
+    border: 1.5px solid rgba(146, 151, 230, 0.11);
+    color: #f3f6ff;
+    font-size: 1.05rem;
+    font-weight: 500;
+    transition: border 0.18s, box-shadow 0.18s;
+    box-shadow: 0 2px 8px rgba(28, 28, 60, 0.03);
+  }
+
+  .input-modern-lg:focus {
+    border: 1.5px solid #a299fd;
+    background: rgba(44, 46, 68, 0.99);
+    box-shadow: 0 2px 10px rgba(88, 88, 180, 0.06);
+  }
+
+  .input-label-lg {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: #e8eaff;
+    letter-spacing: 0.01em;
+  }
+
+  .form-group-lg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .show-hide-btn-lg {
+    position: absolute;
+    right: 1rem;
+    top: 55%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #bdbbe7;
+    cursor: pointer;
+  }
+
+  /* ——— PRIMARY BUTTON (ROOMIER) ——— */
+  .auth-btn-lg {
+    background: linear-gradient(90deg, #857bfd 10%, #bd93fd 90%);
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.95rem 0;
+    border-radius: 0.85rem;
+    margin-top: 0.1rem;
+    box-shadow: 0 4px 16px rgba(60, 70, 180, 0.18);
+    transition: background 0.16s, box-shadow 0.13s, filter 0.12s;
+    filter: drop-shadow(0 1.5px 8px #685fa4b3);
+  }
+
+  .auth-btn-lg:hover {
+    background: linear-gradient(90deg, #998bfd 10%, #e38ff8 90%);
+    box-shadow: 0 8px 24px rgba(80, 80, 200, 0.17);
+    filter: brightness(1.04);
+  }
+
+  .auth-btn-lg:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  /* ——— DIVIDER “or” ——— */
+  .divider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, #24244a 50%, #47476d 100%);
+    opacity: 0.38;
+  }
+
+  .divider-or-lg {
+    font-size: 1rem;
+    color: #6768a3;
+    padding: 0 0.1rem;
+  }
+
+  /* ——— ERROR TEXT ——— */
+  .error-text {
+    color: #ff9ba8;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 1px;
+  }
+
+  /* ——— PARALLAX BACKGROUND ——— */
+  .auth-parallax-bg {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1b2e 50%, #16213e 100%) !important;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+        rgba(147, 51, 234, 0.15) 0%,
+        rgba(59, 130, 246, 0.1) 25%,
+        transparent 50%);
+    transition: background 0.3s ease;
+  }
+
+  .parallax-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.7;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .parallax-blob-1 {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .parallax-blob-2 {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+    top: 60%;
+    right: 15%;
+    animation-delay: 7s;
+  }
+
+  .parallax-blob-3 {
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(45deg, #ec4899, #be185d);
+    bottom: 20%;
+    left: 50%;
+    animation-delay: 14s;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+
+    33% {
+      transform: translateY(-30px) rotate(120deg);
+    }
+
+    66% {
+      transform: translateY(-15px) rotate(240deg);
+    }
+  }
+
+  /* ——— Keep your other existing component classes below ——— */
+  .btn-primary {
+    @apply bg-[var(--color-primary-200)] text-black rounded-full font-bold px-5 min-h-10;
+  }
+
+  .btn-primary:hover {
+    background-color: rgba(var(--color-primary-200-rgb), 0.8);
+    @apply text-white;
+  }
+
+  .btn-secondary {
+    @apply bg-[var(--color-dark-200)] text-[var(--color-primary-200)] rounded-full font-bold px-5 min-h-10;
+  }
+
+  .tech-tooltip {
+    @apply absolute bottom-full mb-1 hidden px-2 py-1 text-xs text-white bg-gray-700 rounded-md shadow-md;
+  }
+
+  .group:hover .tech-tooltip {
+    @apply flex;
+  }
+
+  .card-cta {
+    @apply flex flex-row items-center justify-between rounded-3xl py-6 px-4 sm:px-16 blue-gradient-dark;
+  }
+
+  .card-interview {
+    @apply dark-gradient rounded-2xl p-8 relative overflow-hidden min-h-[480px];
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+  }
+
+  .card-interview .badge-text {
+    @apply text-sm font-semibold capitalize;
+  }
+
+  .form {
+    @apply w-full;
+  }
+
+  .form .label {
+    @apply text-[var(--color-light-100)] font-normal;
+  }
+
+  .form .input {
+    @apply bg-[var(--input)] rounded-full min-h-12 px-5 placeholder:text-[var(--color-light-100)];
+  }
+
+  .form .btn {
+    @apply w-full bg-[var(--color-primary-200)] text-[var(--primary-foreground)] rounded-full font-bold px-5 min-h-10;
+  }
+}
+
+/* 5) UTILITIES LAYER: custom named utilities */
+@layer utilities {
+  .bg-light-100 {
+    background-color: var(--color-light-100);
+  }
+
+  .bg-light-400 {
+    background-color: var(--color-light-400);
+  }
+
+  .bg-light-600 {
+    background-color: var(--color-light-600);
+  }
+
+  .bg-light-800 {
+    background-color: var(--color-light-800);
+  }
+
+  .text-light-400 {
+    color: var(--color-light-400);
+  }
+
+  .text-light-600 {
+    color: var(--color-light-600);
+  }
+
+  .text-light-800 {
+    color: var(--color-light-800);
+  }
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .text-foreground {
+    color: var(--foreground);
+  }
+
+  .border-border {
+    border: 1px solid var(--border);
+  }
+
+  .outline-ring\/50 {
+    outline: 2px solid var(--ring);
+  }
+
+  .text-light-100 {
+    color: var(--color-light-100);
+  }
+
+  .text-dark-100 {
+    color: var(--color-dark-100);
+  }
+
+  .text-dark-200 {
+    color: var(--color-dark-200);
+  }
+
+  .text-dark-300 {
+    color: var(--color-dark-300);
+  }
+
+  .bg-dark-100 {
+    background-color: var(--color-dark-100);
+  }
+
+  .bg-dark-200 {
+    background-color: var(--color-dark-200);
+  }
+
+  .bg-dark-300 {
+    background-color: var(--color-dark-300);
+  }
+
+  .bg-primary-100 {
+    background-color: var(--color-primary-100);
+  }
+
+  .bg-primary-200 {
+    background-color: var(--color-primary-200);
+  }
+
+  .text-primary-100 {
+    color: var(--color-primary-100);
+  }
+
+  .text-primary-200 {
+    color: var(--color-primary-200);
+  }
+
+  .bg-destructive-100 {
+    background-color: var(--color-destructive-100);
+  }
+
+  .bg-destructive-200 {
+    background-color: var(--color-destructive-200);
+  }
+
+  .bg-success-100 {
+    background-color: var(--color-success-100);
+  }
+
+  .bg-success-200 {
+    background-color: var(--color-success-200);
+  }
+
+  .bg-sidebar {
+    background-color: var(--sidebar);
+  }
+
+  .text-sidebar-foreground {
+    color: var(--sidebar-foreground);
+  }
+
+  .bg-sidebar-primary {
+    background-color: var(--sidebar-primary);
+  }
+
+  .text-sidebar-primary-foreground {
+    color: var(--sidebar-primary-foreground);
+  }
+
+  .bg-sidebar-accent {
+    background-color: var(--sidebar-accent);
+  }
+
+  .text-sidebar-accent-foreground {
+    color: var(--sidebar-accent-foreground);
+  }
+
+  .border-gradient {
+    @apply bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33];
+  }
+
+  .dark-gradient {
+    @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D];
+  }
+
+  .blue-gradient-dark {
+    @apply bg-gradient-to-b from-[#171532] to-[#08090D];
+  }
+
+  .blue-gradient {
+    @apply bg-gradient-to-l from-[#FFFFFF] to-[#CAC5FE];
+  }
+
+  .pattern {
+    @apply bg-[url('/pattern.png')] bg-top bg-no-repeat;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
+
+/* 6) OPTIONAL: Custom keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
