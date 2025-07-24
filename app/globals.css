@@ -135,6 +135,115 @@
 /* 4) COMPONENT LAYER: your UI classes */
 @layer components {
 
+  .btn-call {
+    @apply inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-success-100 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl hover:bg-success-200 active:bg-success-200 min-w-28 cursor-pointer flex items-center justify-center overflow-visible;
+  }
+
+  /* ─── inner span sizing ─── */
+  .btn-call span {
+    @apply bg-success-100 h-[85%] w-[65%];
+  }
+
+  .transcript-border {
+    @apply border-gradient p-0.5 rounded-2xl w-full;
+  }
+
+  /* ─── inner transcript box ─── */
+  .transcript-border .transcript {
+    @apply dark-gradient rounded-2xl min-h-[3rem] px-5 py-3 flex items-center justify-center;
+  }
+
+  /* ─── transcript text ─── */
+  .transcript-border .transcript p {
+    @apply text-lg text-center text-white;
+  }
+
+  .call-view {
+    @apply flex flex-col sm:flex-row gap-10 items-center justify-center;
+  }
+
+  /* ── Unified card style ── */
+  .card-interviewer {
+    @apply flex flex-col items-center gap-2 p-7 h-[400px] bg-gradient-to-b from-[#23233b] to-[#2b284b] rounded-lg border-2 border-primary-200 border-opacity-50;
+    /* removed fixed width constraint to allow custom widths */
+    width: 100%;
+  }
+
+  /* ── dark variant for user card ── */
+  .card-interviewer.dark-gradient {
+    @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D];
+  }
+
+  /* ── Avatar centering inside each card ── */
+  .card-interviewer .avatar {
+    @apply mb-4;
+  }
+
+  .card-interviewer h3 {
+    @apply text-primary-100 text-center mt-2;
+  }
+
+  .card-border {
+    @apply border-gradient p-0.5 rounded-2xl flex-1 w-full h-[400px];
+    /* only side-by-side on md+ */
+    @apply hidden md:flex md:basis-1/2;
+  }
+
+  /* ── Inner content (matches interviewer) ── */
+  .card-content {
+    @apply flex flex-col gap-2 justify-center items-center p-7 dark-gradient rounded-2xl min-h-full;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  /* ─── card-interviewer ─── */
+  .card-interviewer {
+    @apply flex flex-col items-center gap-2 p-7 h-[400px] blue-gradient-dark rounded-lg border-2 border-primary-200 border-opacity-50;
+    /* removed fixed width constraint to allow custom widths */
+    width: 100%;
+  }
+
+  /* override for user card background */
+
+
+  /* center the avatar inside each card */
+  .card-interviewer .avatar {
+    @apply mb-4;
+  }
+
+  /* ─── call-view ─── */
+  .call-view {
+    @apply w-full max-w-5xl mx-auto px-4 sm:px-0 flex flex-col sm:flex-row gap-10 items-center justify-center;
+  }
+
+  /* nested h3 */
+  .call-view h3 {
+    @apply text-center text-primary-100 mt-5;
+  }
+
+  /* ❌ Don't @apply card-interviewer here, just repeat the utilities: */
+  .call-view .card-interviewer {
+    @apply flex-center flex-col gap-2 p-7 h-[400px] blue-gradient-dark rounded-lg border-2 border-primary-200 border-opacity-50 flex-1 w-full sm:basis-1/2;
+  }
+
+  .call-view .avatar {
+    @apply z-10 flex items-center justify-center blue-gradient rounded-full w-[120px] h-[120px] relative;
+  }
+
+  .call-view .avatar .animate-speak {
+    @apply absolute inline-flex w-5/6 h-5/6 animate-ping rounded-full bg-primary-200 opacity-75;
+  }
+
+  .call-view .card-border {
+    @apply border-gradient p-0.5 rounded-2xl flex-1 w-full h-[400px] hidden md:flex md:basis-1/2;
+  }
+
+  .call-view .card-content {
+    @apply flex flex-col gap-2 justify-center items-center p-7 dark-gradient rounded-2xl min-h-full;
+  }
+
   /* Card border */
   .card-border {
     @apply border-gradient p-0.5 rounded-2xl w-full h-[400px];
@@ -241,7 +350,7 @@
     cursor: not-allowed;
   }
 
-  /* ——— DIVIDER “or” ——— */
+  /* ——— DIVIDER "or" ——— */
   .divider-row {
     display: flex;
     align-items: center;
@@ -396,10 +505,23 @@
   .form .btn {
     @apply w-full bg-[var(--color-primary-200)] text-[var(--primary-foreground)] rounded-full font-bold px-5 min-h-10;
   }
+
+  /* Force wide cards - override any constraints */
+  .force-wide-card {
+    width: 600px !important;
+    min-width: 600px !important;
+    max-width: none !important;
+    height: 400px !important;
+  }
 }
 
 /* 5) UTILITIES LAYER: custom named utilities */
 @layer utilities {
+
+  .border-primary-200 {
+    border-color: var(--color-primary-200);
+  }
+
   .bg-light-100 {
     background-color: var(--color-light-100);
   }
